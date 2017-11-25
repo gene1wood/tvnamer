@@ -92,6 +92,9 @@ defaults = {
     # Search in all possible languages
     'search_all_languages': True,
 
+    # Create symlinks instead of renaming files
+    'symlink_files_enable': False,
+
     # Move renamed files to directory?
     'move_files_enable': False,
 

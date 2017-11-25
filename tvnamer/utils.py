@@ -1091,27 +1091,31 @@ class Renamer(object):
                 raise OSError("File %s already exists, not forcefully moving %s" % (
                     new_fullpath, self.filename))
 
-        if same_partition(self.filename, new_dir):
-            if always_copy:
-                # Same partition, but forced to copy
-                copy_file(self.filename, new_fullpath)
-            else:
-                # Same partition, just rename the file to move it
-                rename_file(self.filename, new_fullpath)
-
-                # Leave a symlink behind if configured to do so
-                if leave_symlink:
-                    symlink_file(new_fullpath, self.filename)
+        if Config['symlink_files_enable']:
+            p("Creating symlink: %s" % new_fullpath)
+            os.symlink(self.filename, new_fullpath)
         else:
-            # File is on different partition (different disc), copy it
-            copy_file(self.filename, new_fullpath)
-            if always_move:
-                # Forced to move file, we just trash old file
-                p("Deleting %s" % (self.filename))
-                delete_file(self.filename)
+            if same_partition(self.filename, new_dir):
+                if always_copy:
+                    # Same partition, but forced to copy
+                    copy_file(self.filename, new_fullpath)
+                else:
+                    # Same partition, just rename the file to move it
+                    rename_file(self.filename, new_fullpath)
 
-                # Leave a symlink behind if configured to do so
-                if leave_symlink:
-                    symlink_file(new_fullpath, self.filename)
+                    # Leave a symlink behind if configured to do so
+                    if leave_symlink:
+                        symlink_file(new_fullpath, self.filename)
+            else:
+                # File is on different partition (different disc), copy it
+                copy_file(self.filename, new_fullpath)
+                if always_move:
+                    # Forced to move file, we just trash old file
+                    p("Deleting %s" % (self.filename))
+                    delete_file(self.filename)
+
+                    # Leave a symlink behind if configured to do so
+                    if leave_symlink:
+                        symlink_file(new_fullpath, self.filename)
 
         self.filename = new_fullpath
