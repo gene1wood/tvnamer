@@ -228,7 +228,8 @@ def processFile(tvdb_instance, episode):
                     p("File exists, aborting.")
                     return
 
-                doRenameFile(cnamer, newName)
+                if not Config['symlink_files_enable']:
+                    doRenameFile(cnamer, newName)
                 if Config['move_files_enable']:
                     if Config['move_files_destination_is_filepath']:
                         doMoveFile(cnamer = cnamer, destFilepath = getMoveDestination(episode))
