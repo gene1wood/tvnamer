@@ -74,6 +74,7 @@ def getCommandlineParser(defaults):
         g.add_option("--not-move", action="store_false", dest="move_files_enable", help = "Files will remain in current directory")
 
         g.add_option("--symlink", action="store_true", dest="symlink_files_enable", help="Create a new symlink with the filename pointing to the original file")
+        g.add_option("--move-only", action="store_true", dest="move_files_only", help="Move files but don't rename them")
 
         g.add_option("--force-move", action="store_true", dest = "overwrite_destination_on_move", help = "Force move and potentially overwrite existing files in destination folder")
         g.add_option("--force-rename", action="store_true", dest = "overwrite_destination_on_rename", help = "Force rename source file")
