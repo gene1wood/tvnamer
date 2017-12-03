@@ -67,12 +67,14 @@ def getMoveDestination(episode):
             'month': episode.episodenumbers[0].month,
             'day': episode.episodenumbers[0].day,
             'originalfilename': episode.originalfilename,
+            'newfilename': episode.generateFilename(),
             }
     elif isinstance(episode, NoSeasonEpisodeInfo):
         destdir = Config['move_files_destination'] % {
             'seriesname': wrap_validfname(episode.seriesname),
             'episodenumbers': wrap_validfname(formatEpisodeNumbers(episode.episodenumbers)),
             'originalfilename': episode.originalfilename,
+            'newfilename': episode.generateFilename(),
             }
     else:
         destdir = Config['move_files_destination'] % {
@@ -80,6 +82,7 @@ def getMoveDestination(episode):
             'seasonnumber': episode.seasonnumber,
             'episodenumbers': wrap_validfname(formatEpisodeNumbers(episode.episodenumbers)),
             'originalfilename': episode.originalfilename,
+            'newfilename': episode.generateFilename(),
             }
     return destdir
 
